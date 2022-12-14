@@ -37,6 +37,11 @@ def print_sorry(sebbac_action):
     else:
         print("You got some Damage! Get up & fight!!")
 
+def print_health(hero_health, sebbac_health):
+    print("---------------------------------")
+    print(f"Hero_health is {hero_health}")
+    print(f"Sebbac_health is {sebbac_health}")
+    print("---------------------------------")
 
 #============================================================================================
 # Level Two
@@ -157,8 +162,7 @@ def levelOne(game_state):
                 hero_won = False
                 break
         
-        print(f"Hero_health is {hero_health}")
-        print(f"Sebbac_health is {sebbac_health}")
+        print_health(hero_health, sebbac_health)
 
         # update elapsed time
         elapsed_time = int(time.time() - start_time)
@@ -298,8 +302,7 @@ def levelTwo(game_state):
                 hero_won = False
                 break
 
-        print(f"Hero_health is {hero_health}")
-        print(f"Sebbac_health is {sebbac_health}")
+        print_health(hero_health, sebbac_health)
 
         # update elapsed time
         elapsed_time = int(time.time() - start_time)
@@ -440,8 +443,7 @@ def levelThree(game_state):
                 hero_won = False
                 break
 
-        print(f"Hero_health is {hero_health}")
-        print(f"Sebbac_health is {sebbac_health}")
+        print_health(hero_health, sebbac_health)
 
         # update elapsed time
         elapsed_time = int(time.time() - start_time)
