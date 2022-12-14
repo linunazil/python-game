@@ -548,16 +548,30 @@ def levelThree(game_state):
 welcome_message()
 # Ask user to login/signup
 user_name = user_login()
-# create a game state for the current user
-game_state = Game(user_name)
 
-# Ask user to choose the level
-print("\nChoose your Level\n----------------------")
-print("Level 1: Hawkman will fight Sebbac")
-print("Level 2: Dr. Fate will fight Sebbac")
-print("Level 3: Black Adam will fight Sebbac")
-print("Protip! Choose level 3 to kill Sebbac faster but Choose level 1 for more points")
-level = input("1. Level One  2. Level Two  3. Level Three: ")
+# check whether the game state is present to continue the game
+state_loaded = False
+filename = os.path.join('resources', user_name + '.pkl')
+if os.path.exists(filename):
+    print("Do you want to continue from where you left off last time?")
+    opt = input("1. Yes (Continue) 2. No (Restart the Game): ")
+    if opt == '1'
+        # recover game state
+        with open(filename, 'rb') as f:
+            game_state = pickle.load(f)
+            state_loaded = True
+            level = str(game_state.level)
+
+if not state_loaded:
+    # create a game state for the current user
+    game_state = Game(user_name)
+    # Ask user to choose the level
+    print("\nChoose your Level\n----------------------")
+    print("Level 1: Hawkman will fight Sebbac")
+    print("Level 2: Dr. Fate will fight Sebbac")
+    print("Level 3: Black Adam will fight Sebbac")
+    print("Protip! Choose level 3 to kill Sebbac faster but Choose level 1 for more points")
+    level = input("1. Level One  2. Level Two  3. Level Three: ")
 
 if level == '1':
     levelOne(game_state)
