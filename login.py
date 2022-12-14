@@ -1,72 +1,75 @@
 def register():
-    db = open("database.txt", "r")
-    Username = input("Create username: ")
-    Password = input("Create password: ")
-    Passwordconfirm = input("Re-enter password: ")
-    d = []
-    f = []
-    for i in db:
-        a,b = i.split(", ")
-        b = b.strip()
-        d.append(a)
-        f.append(b)
-    data = dict(zip(d, f))
+    # read the secret user file
+    data = {}
+    with open("database.txt", "r") as db:
+        d, f = [], []
+        for line in db:
+            if len(line.strip()) > 0:
+                a = line.split(",")
+                if len(a) == 2:
+                    d.append(a[0].strip())
+                    f.append(a[1].strip())
 
+        data = dict(zip(d, f))
 
-    if Password != Passwordconfirm:
+    username = input("Create username: ")
+    password = input("Create password: ")
+    passwordconfirm = input("Re-enter password: ")
+
+    if password != passwordconfirm:
         print("Password does not match, restart ")
         register()
+    
     else:
-        if len(Password) < 6:
-            print("Password too short, restart ")
+        if len(password) < 1 and len(username) < 1:
+            print("Username or Password too short, restart ")
             register()
 
-
-        elif Username in d:
+        elif username in data:
             print("Username already exist, restart ")
             register()
         else :
-            db = open("database.txt", "a")
-            db.write(Username + ", " + Password + "\n")
-            print("Success! ")
+            with open("database.txt", "a") as db:
+                db.write(username + "," + password + "\n")
+                print("Success! ")
 
 
 
 def access():
-    db = open("database.txt", "r")
-    Username = input("Enter username: ")
-    Password = input("Password password: ")
+    # read the secret user file
+    data = {}
+    with open("database.txt", "r") as db:
+        d, f = [], []
+        for line in db:
+            if len(line.strip()) > 0:
+                a = line.split(",")
+                if len(a) == 2:
+                    d.append(a[0].strip())
+                    f.append(a[1].strip())
 
-    if not len(Username or Password) < 1:
-        d = []
-        f = []
-        for i in db:
-            a, b = i.split(", ")
-            b = b.strip()
-            d.append(a)
-            f.append(b)
         data = dict(zip(d, f))
 
-        try:
-            if  data[Username]:
-                try:
-                    if  Password == data[Username]:
-                        print("Login success ")
-                    else:
-                        print("Username or password incorrect ")
-                        home()
-                except:
-                    print("Incorrect Username or password ")
-                    home()
+    while(True):
+        # user prompt
+        username = input("Enter username: ")
+        password = input("Enter password: ")
+
+        if len(username) < 1  or len(password) < 1:
+            print("Both username & pwd should be at least 1 character long!")
+            continue
+        
+        if  data.get(username):
+            if  password == data.get(username):
+                print("Login success ")
+                break
             else:
-                print("User not found ")
-                home()
-        except:
-            print("Error")
-            home()
-    else:
-        print("Please enter a value ")
-        home()
+                print("Username or password incorrect ")
+                continue
+
+        else:
+            print("User not found ")
+            register()
+    
 
 def home(option = None):
     option = input("Login | Signup: ")
@@ -76,4 +79,5 @@ def home(option = None):
         register()
     else:
         print("Please enter a valid option ")
+
 home()
