@@ -1,6 +1,7 @@
 import random
 
 from welcome import welcome_message
+from login import user_login
 
 
 # Save game state at any point in play to be recovered 
@@ -12,6 +13,16 @@ class Game:
         self.sebacc_health = 100
         self.sebacc_last_move = 0
         self.weapons = []
+
+def levelOne(gamestate):
+    print("""
+       +-+-+-+-+-+ +-+-+-+          
+       |L|E|V|E|L| |O|N|E|          
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |H|A|C|K|M|A|N| |V|S| |S|E|B|B|A|C|
+    +-+-+-+-+-+-+-+ +-+-+ +-+-+-+-+-+-+
+
+    """)
 
 
 
@@ -34,19 +45,13 @@ list3 = list2[slice(0, 2)]
 list4 = list2[slice(0, 4)]
 list5 = list2[slice(0, 6)]
 
+
+
+# Main section; display welcome message
 welcome_message()
+# Ask user to login/signup
+username = user_login()
 
-name = input("Enter your name: ")
-level = input(f"Hi {name}, For LEVEL 1 press any key")
-
-print("""
-   +-+-+-+-+-+ +-+-+-+          
-   |L|E|V|E|L| |O|N|E|          
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|H|A|C|K|M|A|N| |V|S| |S|E|B|B|A|C|
-+-+-+-+-+-+-+-+ +-+-+ +-+-+-+-+-+-+
-
-""")
 
 while Hero_health > 0 and Sebbac_health > 0:
     Sebbac_action = random.sample(list1, 1)

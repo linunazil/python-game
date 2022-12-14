@@ -1,7 +1,7 @@
-def register():
+def read_user_data():
     # read the secret user file
     data = {}
-    with open("../resources/database.txt", "r") as db:
+    with open("resources/database.txt", "r") as db:
         d, f = [], []
         for line in db:
             if len(line.strip()) > 0:
@@ -11,6 +11,13 @@ def register():
                     f.append(a[1].strip())
 
         data = dict(zip(d, f))
+
+    return data
+
+
+def register():
+    # get user password details
+    data = read_user_data()
 
     username = input("Create username: ")
     password = input("Create password: ")
@@ -18,36 +25,32 @@ def register():
 
     if password != passwordconfirm:
         print("Password does not match, restart ")
-        register()
+        username = register()
+        return username
     
     else:
         if len(password) < 1 and len(username) < 1:
-            print("Username or Password too short, restart ")
-            register()
+            print("Username or Password too short!")
+            username = register()
+            return username
 
         elif username in data:
-            print("Username already exist, restart ")
-            register()
+            print("Username already exists!")
+            username = register()
+            return username
+
         else :
-            with open("database.txt", "a") as db:
+            # write the new user to the user file
+            with open("resources/database.txt", "a") as db:
                 db.write(username + "," + password + "\n")
                 print("Success! ")
+                return username
 
 
 
 def access():
-    # read the secret user file
-    data = {}
-    with open("../resources/database.txt", "r") as db:
-        d, f = [], []
-        for line in db:
-            if len(line.strip()) > 0:
-                a = line.split(",")
-                if len(a) == 2:
-                    d.append(a[0].strip())
-                    f.append(a[1].strip())
-
-        data = dict(zip(d, f))
+        # get user password details
+    data = read_user_data()
 
     while(True):
         # user prompt
@@ -63,21 +66,24 @@ def access():
                 print("Login success ")
                 break
             else:
-                print("Username or password incorrect ")
+                print("Incorrect Password")
                 continue
 
         else:
             print("User not found ")
-            register()
+            username = register()
+            break
+    
+    return username
     
 
-def home(option = None):
+def user_login():
     option = input("Login | Signup: ")
     if option.lower() == "login":
-        access()
-    elif option.lower() == "signup":
-        register()
+        username = access()
     else:
-        print("Please enter a valid option ")
+        username = register()
 
-home()
+    return username
+
+user_login()
