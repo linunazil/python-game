@@ -1,5 +1,7 @@
 import random
 import time
+import pickle
+import os
 
 from welcome import welcome_message
 from login import user_login
@@ -10,10 +12,9 @@ class Game:
     def __init__(self, username):
         self.user = username
         self.level = 1
-        self.health = 100
-        self.sebacc_health = 100
-        self.sebacc_last_move = 0
-        self.weapons = []
+        self.hero_health = 100
+        self.sebbac_health = 100
+        self.sebbac_last_move = 0
 
 def print_congrats(hero_action):
     r = random.random()
@@ -85,9 +86,17 @@ def check_leaderboard(username, score):
             lbf.write(user + "," + str(score) + '\n')
 
 
+def save_state(game_state):    
+    print("The game is Paused!\nSaving the current Game state...")
+    filename = os.path.join('resources', game_state.user + ".pkl")
+    with open(filename, 'wb') as f:
+        pickle.dump(game_state, f)
+    
+    quit()
+
 
 #============================================================================================
-# Level Two
+# Level One
 #============================================================================================
 
 def levelOne(game_state):
@@ -168,11 +177,17 @@ def levelOne(game_state):
                 break
 
         # decide hero action
-        action = int(input("Press 1 to punch, press 2 to kick, press 3 to stab, press 4 to block: "))
-        if action in [1, 2, 3]:
-            hero_action = actions[action-1]
+        print("Press 1 to punch, press 2 to kick, press 3 to stab, press 4 to block: ")
+        action = input("Press ANY other key to PAUSE the game: ")
+        if action in ['1', '2', '3', '4']:
+            action = int(action) - 1
+            hero_action = actions[action]
         else:
-            hero_action = "blocked"
+            # need to pause the game
+            game_state.hero_health = hero_health
+            game_state.sebbac_health = sebbac_health
+            game_state.sebbac_last_move = sebbac_action
+            save_state(game_state)
         
         print("You " + hero_action)
 
@@ -309,11 +324,17 @@ def levelTwo(game_state):
                 break
 
         # decide hero action
-        action = int(input("Press 1 to punch, press 2 to kick, press 3 to stab, press 4 to block: "))
-        if action in [1, 2, 3]:
-            hero_action = actions[action-1]
+        print("Press 1 to punch, press 2 to kick, press 3 to stab, press 4 to block: ")
+        action = input("Press ANY other key to PAUSE the game: ")
+        if action in ['1', '2', '3', '4']:
+            action = int(action) - 1
+            hero_action = actions[action]
         else:
-            hero_action = "blocked"
+            # need to pause the game
+            game_state.hero_health = hero_health
+            game_state.sebbac_health = sebbac_health
+            game_state.sebbac_last_move = sebbac_action
+            save_state(game_state)
         
         print("You " + hero_action)
 
@@ -451,11 +472,17 @@ def levelThree(game_state):
                 break
 
         # decide hero action
-        action = int(input("Press 1 to punch, press 2 to kick, press 3 to stab, press 4 to block: "))
-        if action in [1, 2, 3]:
-            hero_action = actions[action-1]
+        print("Press 1 to punch, press 2 to kick, press 3 to stab, press 4 to block: ")
+        action = input("Press ANY other key to PAUSE the game: ")
+        if action in ['1', '2', '3', '4']:
+            action = int(action) - 1
+            hero_action = actions[action]
         else:
-            hero_action = "blocked"
+            # need to pause the game
+            game_state.hero_health = hero_health
+            game_state.sebbac_health = sebbac_health
+            game_state.sebbac_last_move = sebbac_action
+            save_state(game_state)
         
         print("You " + hero_action)
 
