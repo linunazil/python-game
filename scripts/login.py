@@ -1,7 +1,7 @@
 def register():
     # read the secret user file
     data = {}
-    with open("database.txt", "r") as db:
+    with open("../resources/database.txt", "r") as db:
         d, f = [], []
         for line in db:
             if len(line.strip()) > 0:
@@ -38,7 +38,7 @@ def register():
 def access():
     # read the secret user file
     data = {}
-    with open("database.txt", "r") as db:
+    with open("../resources/database.txt", "r") as db:
         d, f = [], []
         for line in db:
             if len(line.strip()) > 0:

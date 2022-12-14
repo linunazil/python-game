@@ -1,5 +1,20 @@
 import random
 
+from welcome import welcome_message
+
+
+# Save game state at any point in play to be recovered 
+class Game:
+    def __init__(self, username):
+        self.user = username
+        self.level = 1
+        self.health = 100
+        self.sebacc_health = 100
+        self.sebacc_last_move = 0
+        self.weapons = []
+
+
+
 Hero_health = 100
 Sebbac_health = 100
 boosted_flag1 = False
@@ -19,7 +34,7 @@ list3 = list2[slice(0, 2)]
 list4 = list2[slice(0, 4)]
 list5 = list2[slice(0, 6)]
 
-
+welcome_message()
 
 name = input("Enter your name: ")
 level = input(f"Hi {name}, For LEVEL 1 press any key")
