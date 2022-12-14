@@ -35,7 +35,7 @@ def register():
             return username
 
         elif username in data:
-            print("Username already exists!")
+            print("Username already exists! Choose some other username")
             username = register()
             return username
 
@@ -86,4 +86,4 @@ def user_login():
 
     return username
 
-user_login()
+# user_login()

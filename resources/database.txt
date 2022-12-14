@@ -1,3 +1,5 @@
 
 binu,12
 linu,a
+jas,1
+febi,1
