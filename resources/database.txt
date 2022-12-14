@@ -3,3 +3,6 @@ binu,12
 linu,a
 jas,1
 febi,1
+bin,1
+baba,1
+apple,1

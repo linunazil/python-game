@@ -41,7 +41,7 @@ def register():
 
         else :
             # write the new user to the user file
-            with open("resources/database.txt", "a") as db:
+            with open("resources/database.txt", "a+") as db:
                 db.write(username + "," + password + "\n")
                 print("Success! ")
                 return username

@@ -1,0 +1,3 @@
+febi,170
+apple,150
+baba,130

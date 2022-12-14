@@ -43,6 +43,49 @@ def print_health(hero_health, sebbac_health):
     print(f"Sebbac_health is {sebbac_health}")
     print("---------------------------------")
 
+
+def check_leaderboard(username, score):
+    users, scores = [], []
+    with open('resources/leaderboard.txt', 'r') as lbf:
+        for line in lbf:
+            if len(line.strip()) > 0:
+                a = line.split(",")
+                if len(a) == 2:
+                    users.append(a[0].strip())
+                    scores.append(int(a[1].strip()))
+
+    data = dict(zip(users, scores))
+
+    if len(scores) < 5 or score > min(scores):
+        # must be added to the leader board
+        # if the user already exists then update their score -
+        # if greater than their existing score
+        if username in users:
+            if score > data.get(username):
+                print("Congrats! Your Leaderboard Updated!")
+                data[username] = score
+        else:
+            # add a new user
+            print("Congrats! You got into the Leaderboard!")
+            data[username] = score
+
+    # sort the dictionary in order
+    sorted_data = sorted(data.items(), key=lambda item: -item[1])
+
+    # write to the leaderboard (only top 5)
+    i = 0
+    with open("resources/leaderboard.txt", "w") as lbf:
+        print("\n----------------\nLead board\n-----------------")
+        print("User\tScore\n-------------------")
+        for user, score in sorted_data:
+            i += 1
+            if i > 5:
+                break
+            print("%s \t %s"%(user, score))
+            lbf.write(user + "," + str(score) + '\n')
+
+
+
 #============================================================================================
 # Level Two
 #============================================================================================
@@ -185,6 +228,7 @@ def levelOne(game_state):
             hero_health += 50
 
         print("Your total score is %d"%(hero_health))
+        check_leaderboard(game_state.user, hero_health)
     
     else:
         print("Hawkman got killed! Dr. Fate will fight Sebbac in Level 2")
@@ -325,6 +369,7 @@ def levelTwo(game_state):
             hero_health += 50
 
         print("Your total score is %d"%(hero_health))
+        check_leaderboard(game_state.user, hero_health)
     
     else:
         print("Dr. Fate got killed! Black Adam will fight Sebbac in Level 3")
@@ -464,6 +509,7 @@ def levelThree(game_state):
             hero_health += 50
 
         print("Your total score is %d"%(hero_health))
+        check_leaderboard(game_state.user, hero_health)
     
     else:
         print("Black Adam got killed! Sad Ending")
