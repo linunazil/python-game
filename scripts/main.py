@@ -555,7 +555,7 @@ filename = os.path.join('resources', user_name + '.pkl')
 if os.path.exists(filename):
     print("Do you want to continue from where you left off last time?")
     opt = input("1. Yes (Continue) 2. No (Restart the Game): ")
-    if opt == '1'
+    if opt == '1':
         # recover game state
         with open(filename, 'rb') as f:
             game_state = pickle.load(f)
